@@ -21,6 +21,7 @@ import com.security.togar.myapplication.base.onErrorHttpException
 import com.security.togar.myapplication.base.onErrorNetwork
 import com.security.togar.myapplication.base.onSuccess
 import com.security.togar.myapplication.base.stateUI
+import com.security.togar.myapplication.data.model.SecurityResponse
 import com.security.togar.myapplication.data.model.VisitorResponse
 import com.security.togar.myapplication.databinding.FragmentFieldBinding
 import com.security.togar.myapplication.ui.main.MainActivity
@@ -52,7 +53,9 @@ class FieldFragment : Fragment() {
     private var nameSecurity = ""
     private var timeVisit = ""
     private var reasone = ""
+    private var shiftSecurity = ""
     private var listNameSecurity: List<String> = listOf()
+    private var dataSecurity: List<SecurityResponse.DataItemSecurity?> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,6 +85,7 @@ class FieldFragment : Fragment() {
             dataState
                 .onSuccess {
                     listNameSecurity = it?.data?.mapNotNull { data -> data?.nama } ?: emptyList()
+                    dataSecurity = it?.data ?: emptyList()
                     initViews()
                 }
                 .onError {
@@ -177,12 +181,21 @@ class FieldFragment : Fragment() {
                 requireContext(),
                 R.layout.list_item_security,
                 R.id.textViewArray,
-                listNameSecurity
+                listNameSecurity,
             )
         actNameSecurity.setAdapter(adapter)
         actNameSecurity.setOnItemClickListener { parent, view, position, id ->
             val selectedItem = parent.getItemAtPosition(position).toString()
             nameSecurity = selectedItem
+            setSelectShift(selectedItem)
+        }
+    }
+
+    private fun setSelectShift(dataClick: String) {
+        dataSecurity.forEach {
+            if (dataClick == it?.nama) {
+                shiftSecurity = it.jadwalSatpam.orEmpty()
+            }
         }
     }
 
@@ -213,7 +226,7 @@ class FieldFragment : Fragment() {
     }
 
     private fun isFieldCompleate(): Boolean {
-        return numberPlatUser != "" && timeVisit != "" && reasone != "" && typeUser != ""// && nameSecurity != ""
+        return numberPlatUser != "" && timeVisit != "" && reasone != "" && typeUser != "" && nameSecurity != ""
     }
 
     private fun selectClock() = with(binding) {
@@ -236,7 +249,6 @@ class FieldFragment : Fragment() {
     }
 
     private fun observeData(isDashBoard: Boolean) = lifecycleScope.launch {
-        val userShift: String? = Local.getData(requireContext(), Constant.USER_EMAIL, "")
         if (isDashBoard) {
             viewModel.updateVisitor(
                 function = "updateVisitor",
@@ -246,7 +258,7 @@ class FieldFragment : Fragment() {
                 createAt = timeVisit,
                 updateAt = timeVisit,
                 reason = reasone,
-                jadwalSatpam = userShift.orEmpty(),
+                jadwalSatpam = shiftSecurity,
                 statusVisitor = typeUser
             )
             viewModel.updateVisitor.launchAndCollectIn(viewLifecycleOwner) { dataState ->
@@ -279,7 +291,7 @@ class FieldFragment : Fragment() {
                 createAt = timeVisit,
                 updateAt = timeVisit,
                 reason = reasone,
-                jadwalSatpam = userShift.orEmpty(),
+                jadwalSatpam = shiftSecurity,
                 statusVisitor = typeUser
             )
             viewModel.insertVisitor.launchAndCollectIn(viewLifecycleOwner) { dataState ->
