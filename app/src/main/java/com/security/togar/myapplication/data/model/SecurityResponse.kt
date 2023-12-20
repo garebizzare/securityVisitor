@@ -30,7 +30,10 @@ data class SecurityResponse(
 		val id: String? = "",
 
 		@SerializedName("email")
-		val email: String? = ""
+		val email: String? = "",
+
+		@SerializedName("jadwal_satpam")
+		val jadwalSatpam: String? = ""
 	) : Parcelable
 
 }

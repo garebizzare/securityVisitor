@@ -22,11 +22,12 @@ interface ApiClient {
     suspend fun insertVisitor(
         @Query("function") function: String,
         @Field("id") id: String,
-        @Field("no_plat") noPlat: String,
         @Field("security_name") securityName: String,
+        @Field("no_plat") noPlat: String,
         @Field("createAt") createAt: String,
         @Field("updateAt") updateAt: String,
         @Field("tujuan") tujuan: String,
+        @Field("jadwal_satpam") jadwalSatpam: String,
         @Field("status_visitor") statusVisitor: String
     ): StatusResponse
 
@@ -35,11 +36,12 @@ interface ApiClient {
     suspend fun updateVisitor(
         @Query("function") function: String,
         @Query("id") id: String,
-        @Field("no_plat") noPlat: String,
         @Field("security_name") securityName: String,
+        @Field("no_plat") noPlat: String,
         @Field("createAt") createAt: String,
         @Field("updateAt") updateAt: String,
         @Field("tujuan") tujuan: String,
+        @Field("jadwal_satpam") jadwalSatpam: String,
         @Field("status_visitor") statusVisitor: String
     ): StatusResponse
 

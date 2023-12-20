@@ -77,6 +77,11 @@ class LoginActivity : AppCompatActivity() {
                         Constant.USERNAME,
                         it?.data?.get(0)?.nama.toString()
                     )
+                    Local.saveData(
+                        this@LoginActivity,
+                        Constant.USER_SHIFT,
+                        it?.data?.get(0)?.jadwalSatpam.toString()
+                    )
                     showToastSuccess()
                     handleIntent()
                 }

@@ -12,10 +12,11 @@ interface AppRepository {
         function: String,
         id: String,
         securityName: String,
+        noPlat: String,
         createAt: String,
         updateAt: String,
-        tujuan: String,
-        noPlat: String,
+        reason: String,
+        jadwalSatpam: String,
         statusVisitor: String
     ): StatusResponse
 
@@ -23,10 +24,11 @@ interface AppRepository {
         function: String,
         id: String,
         securityName: String,
-        createAt: String,
         noPlat: String,
+        createAt: String,
         updateAt: String,
-        tujuan: String,
+        reason: String,
+        jadwalSatpam: String,
         statusVisitor: String
     ): StatusResponse
 
@@ -49,10 +51,11 @@ class AppRepositoryImpl(
         function: String,
         id: String,
         securityName: String,
+        noPlat: String,
         createAt: String,
         updateAt: String,
-        noPlat: String,
-        tujuan: String,
+        reason: String,
+        jadwalSatpam: String,
         statusVisitor: String
     ): StatusResponse {
         return safeApiCall {
@@ -60,11 +63,12 @@ class AppRepositoryImpl(
                 function = function,
                 id = id,
                 securityName = securityName,
+                noPlat = noPlat,
                 createAt = createAt,
                 updateAt = updateAt,
-                tujuan = tujuan,
-                statusVisitor = statusVisitor,
-                noPlat = noPlat
+                tujuan = reason,
+                jadwalSatpam = jadwalSatpam,
+                statusVisitor = statusVisitor
             )
         }
     }
@@ -73,10 +77,11 @@ class AppRepositoryImpl(
         function: String,
         id: String,
         securityName: String,
+        noPlat: String,
         createAt: String,
         updateAt: String,
-        noPlat: String,
-        tujuan: String,
+        reason: String,
+        jadwalSatpam: String,
         statusVisitor: String
     ): StatusResponse {
         return safeApiCall {
@@ -84,14 +89,16 @@ class AppRepositoryImpl(
                 function = function,
                 id = id,
                 securityName = securityName,
+                noPlat = noPlat,
                 createAt = createAt,
                 updateAt = updateAt,
-                tujuan = tujuan,
-                statusVisitor = statusVisitor,
-                noPlat = noPlat
+                tujuan = reason,
+                jadwalSatpam = jadwalSatpam,
+                statusVisitor = statusVisitor
             )
         }
     }
+
 
     override suspend fun deleteVisitor(function: String, id: String): StatusResponse {
         return safeApiCall {

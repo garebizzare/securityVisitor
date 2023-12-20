@@ -36,6 +36,8 @@ class ItemRecyclerViewAdapter(
             binding.tvPlatNomer.text = item.noPlat
             binding.tvNameSecurity.text = item.securityName
             binding.tvReason.text = item.tujuan
+            val shiftText = "Shift ${item.jadwalSatpam}"
+            binding.tvShift.text = shiftText
 
             when {
                 isFromHome -> {

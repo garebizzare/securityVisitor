@@ -9,39 +9,42 @@ import com.google.gson.annotations.SerializedName
 @Parcelize
 data class VisitorResponse(
 
-	@SerializedName("data")
-	val data: List<DataItemVisitor?>? = null,
+    @SerializedName("data")
+    val data: List<DataItemVisitor?>? = null,
 
-	@SerializedName("message")
-	val message: String? = "",
+    @SerializedName("message")
+    val message: String? = "",
 
-	@SerializedName("status")
-	val status: Int? = 0
+    @SerializedName("status")
+    val status: Int? = 0
 ) : Parcelable {
 
-	@Parcelize
-	data class DataItemVisitor(
+    @Parcelize
+    data class DataItemVisitor(
 
-		@SerializedName("status_visitor")
-		val statusVisitor: String? = "",
+        @SerializedName("status_visitor")
+        val statusVisitor: String? = "",
 
-		@SerializedName("updateAt")
-		val updateAt: String? = "",
+        @SerializedName("updateAt")
+        val updateAt: String? = "",
 
-		@SerializedName("id")
-		val id: String? = "",
+        @SerializedName("id")
+        val id: String? = "",
 
-		@SerializedName("no_plat")
-		val noPlat: String? = "",
+        @SerializedName("no_plat")
+        val noPlat: String? = "",
 
-		@SerializedName("tujuan")
-		val tujuan: String? = "",
+        @SerializedName("tujuan")
+        val tujuan: String? = "",
 
-		@SerializedName("security_name")
-		val securityName: String? = "",
+        @SerializedName("security_name")
+        val securityName: String? = "",
 
-		@SerializedName("createAt")
-		val createAt:String? = ""
-	) : Parcelable
+        @SerializedName("createAt")
+        val createAt: String? = "",
+
+        @SerializedName("jadwal_satpam")
+        val jadwalSatpam: String? = ""
+    ) : Parcelable
 
 }

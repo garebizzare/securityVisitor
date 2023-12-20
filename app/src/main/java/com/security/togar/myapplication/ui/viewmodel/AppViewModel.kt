@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AppViewModel  @Inject constructor(
+class AppViewModel @Inject constructor(
     private val repository: AppRepository
 ) : ViewModel() {
     private val _getAllVisitor = MutableStateFlow<DataState<VisitorResponse?>>(DataState.Empty)
@@ -50,7 +50,8 @@ class AppViewModel  @Inject constructor(
         noPlat: String,
         createAt: String,
         updateAt: String,
-        tujuan: String,
+        reason: String,
+        jadwalSatpam: String,
         statusVisitor: String
     ) = viewModelScope.launch {
         _insertVisitor.asMutableStateFlow {
@@ -58,11 +59,12 @@ class AppViewModel  @Inject constructor(
                 function = function,
                 id = id,
                 securityName = securityName,
+                noPlat = noPlat,
                 createAt = createAt,
                 updateAt = updateAt,
-                tujuan = tujuan,
-                statusVisitor = statusVisitor,
-                noPlat = noPlat
+                reason = reason,
+                jadwalSatpam = jadwalSatpam,
+                statusVisitor = statusVisitor
             )
         }
     }
@@ -70,11 +72,12 @@ class AppViewModel  @Inject constructor(
     fun updateVisitor(
         function: String,
         id: String,
-        noPlat: String,
         securityName: String,
+        noPlat: String,
         createAt: String,
         updateAt: String,
-        tujuan: String,
+        reason: String,
+        jadwalSatpam: String,
         statusVisitor: String
     ) = viewModelScope.launch {
         _updateVisitor.asMutableStateFlow {
@@ -82,11 +85,12 @@ class AppViewModel  @Inject constructor(
                 function = function,
                 id = id,
                 securityName = securityName,
+                noPlat = noPlat,
                 createAt = createAt,
                 updateAt = updateAt,
-                tujuan = tujuan,
-                statusVisitor = statusVisitor,
-                noPlat = noPlat
+                reason = reason,
+                jadwalSatpam = jadwalSatpam,
+                statusVisitor = statusVisitor
             )
         }
     }

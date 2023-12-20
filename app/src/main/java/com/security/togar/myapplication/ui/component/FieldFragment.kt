@@ -25,10 +25,12 @@ import com.security.togar.myapplication.data.model.VisitorResponse
 import com.security.togar.myapplication.databinding.FragmentFieldBinding
 import com.security.togar.myapplication.ui.main.MainActivity
 import com.security.togar.myapplication.ui.viewmodel.AppViewModel
+import com.security.togar.myapplication.utils.Constant
 import com.security.togar.myapplication.utils.Constant.IS_DETAIL
 import com.security.togar.myapplication.utils.Constant.IS_HOME
 import com.security.togar.myapplication.utils.Constant.IS_USER
 import com.security.togar.myapplication.utils.Constant.IS_VISITOR
+import com.security.togar.myapplication.utils.Local
 import com.security.togar.myapplication.utils.generateRandomString
 import com.security.togar.myapplication.utils.showToastError
 import com.security.togar.myapplication.utils.showToastSuccess
@@ -50,7 +52,7 @@ class FieldFragment : Fragment() {
     private var nameSecurity = ""
     private var timeVisit = ""
     private var reasone = ""
-    private var listNameSecurity : List<String> = listOf()
+    private var listNameSecurity: List<String> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,7 +81,7 @@ class FieldFragment : Fragment() {
         viewModel.getAllSecurity.launchAndCollectIn(viewLifecycleOwner) { dataState ->
             dataState
                 .onSuccess {
-                    listNameSecurity = it?.data?.mapNotNull { data-> data?.nama } ?: emptyList()
+                    listNameSecurity = it?.data?.mapNotNull { data -> data?.nama } ?: emptyList()
                     initViews()
                 }
                 .onError {
@@ -171,7 +173,12 @@ class FieldFragment : Fragment() {
 
     private fun setNameSecurity() = with(binding) {
         val adapter =
-            ArrayAdapter(requireContext(), R.layout.list_item_security, R.id.textViewArray, listNameSecurity)
+            ArrayAdapter(
+                requireContext(),
+                R.layout.list_item_security,
+                R.id.textViewArray,
+                listNameSecurity
+            )
         actNameSecurity.setAdapter(adapter)
         actNameSecurity.setOnItemClickListener { parent, view, position, id ->
             val selectedItem = parent.getItemAtPosition(position).toString()
@@ -229,16 +236,18 @@ class FieldFragment : Fragment() {
     }
 
     private fun observeData(isDashBoard: Boolean) = lifecycleScope.launch {
+        val userShift: String? = Local.getData(requireContext(), Constant.USER_EMAIL, "")
         if (isDashBoard) {
             viewModel.updateVisitor(
                 function = "updateVisitor",
                 id = data.id.orEmpty(),
                 securityName = nameSecurity,
+                noPlat = numberPlatUser,
                 createAt = timeVisit,
                 updateAt = timeVisit,
-                tujuan = reasone,
-                statusVisitor = typeUser,
-                noPlat = numberPlatUser
+                reason = reasone,
+                jadwalSatpam = userShift.orEmpty(),
+                statusVisitor = typeUser
             )
             viewModel.updateVisitor.launchAndCollectIn(viewLifecycleOwner) { dataState ->
                 dataState.stateUI(
@@ -246,7 +255,6 @@ class FieldFragment : Fragment() {
                 )
                 dataState
                     .onSuccess {
-                        println("dadadadada $it")
                         requireContext().showToastSuccess()
                         val intent = Intent(requireContext(), MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -267,11 +275,12 @@ class FieldFragment : Fragment() {
                 function = "insertVisitor",
                 id = generateRandomString(10),
                 securityName = nameSecurity,
+                noPlat = numberPlatUser,
                 createAt = timeVisit,
                 updateAt = timeVisit,
-                tujuan = reasone,
-                statusVisitor = typeUser,
-                noPlat = numberPlatUser
+                reason = reasone,
+                jadwalSatpam = userShift.orEmpty(),
+                statusVisitor = typeUser
             )
             viewModel.insertVisitor.launchAndCollectIn(viewLifecycleOwner) { dataState ->
                 dataState.stateUI(
