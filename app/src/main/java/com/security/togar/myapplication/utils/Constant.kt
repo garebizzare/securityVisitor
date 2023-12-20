@@ -1,7 +1,7 @@
 package com.security.togar.myapplication.utils
 
 object Constant {
-    const val BASE_URL = "http://192.168.43.94/securityapp/"
+    const val BASE_URL = "http://todo/securityapp/"
     const val IS_HOME = "isHome"
     const val IS_DASHBOARD = "isDashboard"
     const val IS_LIST_DATA = "isListData"
