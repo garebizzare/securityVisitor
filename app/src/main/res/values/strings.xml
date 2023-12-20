@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Security</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">All</string>
+    <string name="exit">Keluar</string>
+    <string name="yes">Iya</string>
+    <string name="no">Tidak</string>
+    <string name="message_exit">Apakah Anda Ingin Keluar?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
